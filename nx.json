@@ -91,6 +91,11 @@
       "cache": true,
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
+    },
+    "serve": {
+      "options": {
+        "inspect": false
+      }
     }
   }
 }

@@ -2,7 +2,16 @@
   "name": "@server/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "dev": "nx serve monolithic --no-tui",
+    "start": "node apps/monolithic/dist/main.js",
+    "pm2": "pm2 start ecosystem.config.js",
+    "pm2:restart": "pm2 restart all",
+    "pm2:stop": "pm2 stop all",
+    "pm2:delete": "pm2 delete all",
+    "pm2:logs": "pm2 logs --lines 30",
+    "pm2:monit": "pm2 monit"
+  },
   "private": true,
   "dependencies": {
     "axios": "^1.6.0",
