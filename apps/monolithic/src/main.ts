@@ -54,7 +54,7 @@ export const io = new SocketIOServer(httpServer, {
 
 httpServer.listen(Number(config.PORT), () => {
   console.log(
-    `🚀 Monolethic server is running on port ${config.PORT} in ${config.NODE_ENV}`,
+    ` Monolethic server is running on port ${config.PORT} in ${config.NODE_ENV}`,
   );
 });
 
