@@ -8,6 +8,15 @@
     },
     {
       "path": "./apps/monolithic"
+    },
+    {
+      "path": "./libs/constants"
+    },
+    {
+      "path": "./libs/protect"
+    },
+    {
+      "path": "./libs/types"
     }
   ]
 }
