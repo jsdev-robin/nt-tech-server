@@ -37,6 +37,19 @@ const requiredVars: Array<keyof ProcessEnv> = [
   // IP Request
   'IPINFO_KEY',
 
+  // Cloudinary
+  'CLOUD_NAME',
+  'CLOUD_API_KEY',
+  'CLOUD_API_SECRET',
+  'CLOUDINARY_URL',
+
+  // Email
+  'EMAIL_USERNAME',
+  'EMAIL_PASSWORD',
+  'EMAIL_HOST',
+  'EMAIL_PORT',
+  'EMAIL_FROM',
+
   // Client URL
   'WEB_CLIENT_URL',
   'ADMIN_CLIENT_URL',

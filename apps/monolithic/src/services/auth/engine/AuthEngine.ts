@@ -226,7 +226,6 @@ export class AuthEngine extends TokenService {
       {
         isPasskey: user?.auth?.passkey?.isEnabled,
         isTwoFa: user?.auth?.twoFa?.isEnabled,
-        linkedTo: user?.linkedTo,
         id: user?.id,
       },
       config.CRYPTO_SECRET,

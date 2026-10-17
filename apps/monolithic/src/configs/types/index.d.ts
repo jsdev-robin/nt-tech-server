@@ -15,6 +15,19 @@ export interface ProcessEnv {
   UPSTASH_REDIS_REST_URL: string;
   UPSTASH_REDIS_REST_TOKEN: string;
 
+  // Cloudinary
+  CLOUD_NAME: string;
+  CLOUD_API_KEY: string;
+  CLOUD_API_SECRET: string;
+  CLOUDINARY_URL: string;
+
+  // Email
+  EMAIL_USERNAME: string;
+  EMAIL_PASSWORD: string;
+  EMAIL_HOST: string;
+  EMAIL_PORT: string;
+  EMAIL_FROM: string;
+
   // IP Request
   IPINFO_KEY: string;
 
