@@ -4,7 +4,6 @@ declare global {
   namespace Express {
     interface Request {
       userId: string;
-      linkedTo?: string;
       self: IUser;
       remember?: boolean;
       accessToken: string;
