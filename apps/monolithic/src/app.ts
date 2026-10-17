@@ -25,10 +25,8 @@ app.set('query parser', 'extended');
 app.set('trust proxy', 1);
 
 // Parse request bodies
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json({ limit: '100mb' }));
-app.use(bodyParser.urlencoded({ extended: true, limit: '100mb' }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Parse cookies
 app.use(cookieParser(config.COOKIE_SECRET));
