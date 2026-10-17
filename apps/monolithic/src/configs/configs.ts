@@ -23,12 +23,6 @@ const requiredVars: Array<keyof ProcessEnv> = [
   'UPSTASH_REDIS_REST_URL',
   'UPSTASH_REDIS_REST_TOKEN',
 
-  // Cloudinary
-  'CLOUD_NAME',
-  'CLOUD_API_KEY',
-  'CLOUD_API_SECRET',
-  'CLOUDINARY_URL',
-
   // Security & Auth
   'IPINFO_KEY',
   'COOKIE_SECRET',
@@ -42,25 +36,6 @@ const requiredVars: Array<keyof ProcessEnv> = [
   'REFRESH_TOKEN',
   'PROTECT_TOKEN',
 
-  // Email
-  'EMAIL_USERNAME',
-  'EMAIL_PASSWORD',
-  'EMAIL_HOST',
-  'EMAIL_PORT',
-  'EMAIL_FROM',
-
-  // OAuth / Social logins
-  'GOOGLE_CLIENT_ID',
-  'GOOGLE_CLIENT_SECRET',
-  'GITHUB_CLIENT_ID',
-  'GITHUB_CLIENT_SECRET',
-  'FACEBOOK_CLIENT_ID',
-  'FACEBOOK_CLIENT_SECRET',
-  'CONSUMER_KEY',
-  'CONSUMER_SECRET',
-  'DISCORD_CLIENT_ID',
-  'DISCORD_CLIENT_SECRET',
-
   // Client URLs
   'WEB_CLIENT_URL',
   'ADMIN_CLIENT_URL',
@@ -69,9 +44,6 @@ const requiredVars: Array<keyof ProcessEnv> = [
   // RP (Relying Party)
   'RP_NAME',
   'RP_ID',
-
-  // Server & API
-  'AUTH_SERVER_ORIGIN',
 ];
 
 function validateEnv(env: ProcessEnv) {
