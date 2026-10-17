@@ -1,3 +1,4 @@
+import { Status } from '@server/constants';
 import { HydratedDocument, InferSchemaType, Schema, model } from 'mongoose';
 
 const commentSchema = new Schema(
@@ -21,6 +22,17 @@ const commentSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    recordStatus: {
+      type: String,
+      enum: Object.values(Status),
+      default: Status.ACTIVE,
+    },
+    linkedTo: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      index: true,
+    },
+    expiresAt: { type: Date },
   },
   {
     timestamps: true,
@@ -29,9 +41,11 @@ const commentSchema = new Schema(
   },
 );
 
-commentSchema.index({ ticket: 1, createdAt: 1 });
-commentSchema.index({ ticket: 1, isInternal: 1, createdAt: 1 });
+commentSchema.index({ linkedTo: 1, recordStatus: 1, createdAt: -1 });
+commentSchema.index({ linkedTo: 1, ticket: 1, recordStatus: 1, createdAt: 1 });
+commentSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
 
 export type IComment = InferSchemaType<typeof commentSchema>;
 export type CommentDocument = HydratedDocument<IComment>;
+
 export const CommentModel = model<IComment>('Comment', commentSchema);
