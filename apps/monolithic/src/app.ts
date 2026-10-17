@@ -10,6 +10,7 @@ import morgan from 'morgan';
 import { config } from './configs/configs';
 import { limiter } from './middlewares/limiter';
 import authRouter from './routes/auth/authRoutes';
+import ticketRouter from './routes/ticket.routes';
 
 const app: Application = express();
 
@@ -73,6 +74,7 @@ app.get('/', (_, res) => {
 });
 
 app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/tickets', ticketRouter);
 
 // Handle 404 errors
 app.all(/(.*)/, notFoundHandler);
