@@ -7,7 +7,18 @@ dotenv.config({
   debug: process.env.DEBUG === 'true',
 });
 
+const defaults: Partial<ProcessEnv> = {
+  NODE_ENV: 'development',
+  PORT: '8000',
+};
+
+const env = {
+  ...defaults,
+  ...process.env,
+} as ProcessEnv;
+
 const requiredVars: Array<keyof ProcessEnv> = [
+  // Server
   'NODE_ENV',
   'DOMAIN',
   'PORT',
@@ -16,68 +27,59 @@ const requiredVars: Array<keyof ProcessEnv> = [
   'DATABASE_ONLINE',
   'DATABASE_PASSWORD_ONLINE',
 
-  // Redis
+  // Redis / Upstash
   'NODE_REDIS_URL',
   'NODE_REDIS_PORT',
   'REDIS_URL',
   'UPSTASH_REDIS_REST_URL',
   'UPSTASH_REDIS_REST_TOKEN',
 
-  // Security & Auth
+  // IP Request
   'IPINFO_KEY',
-  'COOKIE_SECRET',
-  'ACTIVATION_SECRET',
-  'CRYPTO_SECRET',
-  'HMAC_SECRET',
-  'EMAIL_CHANGE_SECRET',
 
-  // Tokens
-  'ACCESS_TOKEN',
-  'REFRESH_TOKEN',
-  'PROTECT_TOKEN',
-
-  // Client URLs
+  // Client URL
   'WEB_CLIENT_URL',
   'ADMIN_CLIENT_URL',
   'AGENT_CLIENT_URL',
 
-  // RP (Relying Party)
+  // Passkeys
   'RP_NAME',
   'RP_ID',
+
+  // Secrets & Encryption
+  'EMAIL_CHANGE_SECRET',
+  'COOKIE_SECRET',
+  'ACTIVATION_SECRET',
+  'CRYPTO_SECRET',
+  'HMAC_SECRET',
+  'ACCESS_TOKEN',
+  'REFRESH_TOKEN',
+  'PROTECT_TOKEN',
 ];
 
-function validateEnv(env: ProcessEnv) {
+function validateEnv(env: ProcessEnv): void {
   const missing = requiredVars.filter(
     (key) => !env[key] || env[key].trim() === '',
   );
+
   if (missing.length > 0) {
     console.error(`Missing environment variables: ${missing.join(', ')}`);
     process.exit(1);
   }
 }
 
-const env = process.env as unknown as ProcessEnv;
 validateEnv(env);
 
-const defaults: Partial<ProcessEnv> = {
-  NODE_ENV: 'development',
-  PORT: '8080',
-};
-
-const config: ProcessEnv & { ISPRODUCTION: boolean; DB: string } = {
-  ...defaults,
+const config: ProcessEnv & {
+  ISPRODUCTION: boolean;
+  DB: string;
+} = {
   ...env,
   ISPRODUCTION: env.NODE_ENV === 'production',
-  DB:
-    env.NODE_ENV === 'production'
-      ? env.DATABASE_ONLINE.replace(
-          '<db_password>',
-          env.DATABASE_PASSWORD_ONLINE,
-        )
-      : env.DATABASE_ONLINE.replace(
-          '<db_password>',
-          env.DATABASE_PASSWORD_ONLINE,
-        ),
+  DB: env.DATABASE_ONLINE.replace(
+    '<db_password>',
+    env.DATABASE_PASSWORD_ONLINE,
+  ),
 };
 
 export { config };
