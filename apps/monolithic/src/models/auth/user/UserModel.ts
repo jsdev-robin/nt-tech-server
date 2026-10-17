@@ -1,6 +1,6 @@
 import { IUser, Role } from '@server/types';
 import { compare } from 'bcryptjs';
-import { HydratedDocument, model, Model, Schema, Types } from 'mongoose';
+import { HydratedDocument, model, Model, Schema } from 'mongoose';
 
 const UserSchema = new Schema(
   {
@@ -47,15 +47,10 @@ const UserSchema = new Schema(
     role: {
       type: [String],
       enum: Object.values(Role),
-      default: [Role.GUEST],
+      default: [Role.CUSTOMER],
     },
     isActive: { type: Boolean, default: true },
-    isOnline: { type: Boolean, default: false },
     isVerified: { type: Boolean, default: false },
-
-    linkedTo: {
-      type: Types.ObjectId,
-    },
   },
   {
     writeConcern: { w: 'majority', j: true, wtimeout: 5000 },

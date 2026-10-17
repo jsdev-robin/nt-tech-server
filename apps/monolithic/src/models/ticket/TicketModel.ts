@@ -1,4 +1,4 @@
-import { TicketPriority, TicketStatus } from '@server/constants';
+import { Status, TicketPriority, TicketStatus } from '@server/constants';
 import { HydratedDocument, InferSchemaType, Schema, model } from 'mongoose';
 
 const ticketSchema = new Schema(
@@ -15,11 +15,6 @@ const ticketSchema = new Schema(
       required: true,
       trim: true,
       maxlength: 5000,
-    },
-    status: {
-      type: String,
-      enum: Object.values(TicketStatus),
-      default: TicketStatus.OPEN,
     },
     priority: {
       type: String,
@@ -48,6 +43,22 @@ const ticketSchema = new Schema(
       },
       suggestedAt: { type: Date },
     },
+
+    status: {
+      type: String,
+      enum: Object.values(TicketStatus),
+      default: TicketStatus.OPEN,
+    },
+    recordStatus: {
+      type: String,
+      enum: Object.values(Status),
+      default: Status.ACTIVE,
+    },
+    linkedTo: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      index: true,
+    },
   },
   {
     timestamps: true,
@@ -56,9 +67,15 @@ const ticketSchema = new Schema(
   },
 );
 
-ticketSchema.index({ status: 1 });
-ticketSchema.index({ priority: 1 });
-ticketSchema.index({ status: 1, priority: 1, dueDate: 1 });
+ticketSchema.index({ linkedTo: 1, recordStatus: 1, createdAt: -1 });
+ticketSchema.index({
+  linkedTo: 1,
+  recordStatus: 1,
+  status: 1,
+  priority: 1,
+  dueDate: 1,
+});
+ticketSchema.index({ linkedTo: 1, assignedTo: 1, recordStatus: 1 });
 
 export type ITicket = InferSchemaType<typeof ticketSchema>;
 export type TicketDocument = HydratedDocument<ITicket>;
