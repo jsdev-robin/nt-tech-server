@@ -19,21 +19,21 @@ router.post(
   '/signup',
   limiter(60 * 1000, 5),
   validationRequest(ZAuthSchema.signup),
-  authController.signup([Role.ADMIN]),
+  authController.signup([Role.CUSTOMER]),
 );
 
 router.post(
   '/verify',
   limiter(60 * 1000, 5),
   validationRequest(ZAuthSchema.verify),
-  authController.verify(Role.ADMIN),
+  authController.verify(Role.CUSTOMER),
 );
 
 router.post(
   '/signin',
   limiter(60 * 1000, 5),
   validationRequest(ZAuthSchema.signin),
-  authController.signin([Role.ADMIN]),
+  authController.signin([Role.CUSTOMER, Role.ADMIN, Role.AGENT]),
   authController.isTwoFa,
   authController.createSession,
 );
@@ -44,7 +44,7 @@ router.post(
   '/forgot-password',
   limiter(60 * 1000, 5),
   validationRequest(ZAuthSchema.forgotPassword),
-  authController.forgotPassword([Role.ADMIN]),
+  authController.signin([Role.CUSTOMER, Role.ADMIN, Role.AGENT]),
 );
 
 router.patch(
@@ -59,7 +59,11 @@ router.post(
   '/passkey/authentication/generate',
   limiter(60 * 1000, 5),
   validationRequest(ZPasskeySchema.generateAuthentication),
-  authPasskeyController.generateAuthentication([Role.ADMIN]),
+  authPasskeyController.generateAuthentication([
+    Role.CUSTOMER,
+    Role.ADMIN,
+    Role.AGENT,
+  ]),
 );
 router.post(
   '/passkey/authentication/verify',
@@ -89,7 +93,7 @@ router.post(
 router.use(
   authProtect.validateToken,
   authProtect.requireAuth,
-  authProtect.restrictTo([Role.ADMIN]),
+  authProtect.restrictTo([Role.CUSTOMER, Role.ADMIN, Role.AGENT]),
 );
 router
   .route('/profile')
